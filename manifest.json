@@ -1,0 +1,13 @@
+{
+    "manifest_version": 2,
+    "name": "Teams Alive",
+    "version": "1.0",
+    "description": "Keep Microsoft Teams status active",
+    "background": {
+      "scripts": ["background.js"]
+    },
+    "permissions": ["<all_urls>", "tabs", "activeTab"],
+    "browser_action": {
+      "default_title": "Teams Alive!"
+    }
+}

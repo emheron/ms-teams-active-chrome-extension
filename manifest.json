@@ -1,13 +1,25 @@
 {
-    "manifest_version": 2,
-    "name": "Teams Alive",
-    "version": "1.0",
-    "description": "Keep Microsoft Teams status active",
-    "background": {
-      "scripts": ["background.js"]
-    },
-    "permissions": ["<all_urls>", "tabs", "activeTab"],
-    "browser_action": {
-      "default_title": "Teams Alive!"
-    }
+  "manifest_version": 3,
+  "name": "Wiggle Teams",
+  "version": "1.0",
+  "description": "Wiggle Teams",
+  "background": {
+      "service_worker": "background.js",
+      "type": "module"
+  },
+  "permissions": ["tabs", "activeTab", "scripting"],
+  "host_permissions": ["*://teams.microsoft.com/*"],
+  "content_scripts": [
+      {
+          "matches": ["*://teams.microsoft.com/*"],
+          "js": ["background.js"]
+      }
+  ],
+  "action": {
+      "default_title": "Wiggle Teams!",
+      "default_icon": {
+          "128": "activeUser.png"
+      }
+  }
 }
+

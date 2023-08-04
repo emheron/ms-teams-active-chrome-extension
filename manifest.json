@@ -4,22 +4,16 @@
   "version": "1.0",
   "description": "Wiggle Teams",
   "background": {
-      "service_worker": "background.js",
-      "type": "module"
+    "service_worker": "background.js"
   },
   "permissions": ["tabs", "activeTab", "scripting"],
   "host_permissions": ["*://teams.microsoft.com/*"],
-  "content_scripts": [
-      {
-          "matches": ["*://teams.microsoft.com/*"],
-          "js": ["background.js"]
-      }
-  ],
   "action": {
-      "default_title": "Wiggle Teams!",
-      "default_icon": {
-          "128": "activeUser.png"
-      }
+    "default_title": "Wiggle Teams!",
+    "default_icon": {
+      "128": "activeUser.png"
+    }
   }
 }
+
 

@@ -9,11 +9,13 @@
   "permissions": ["tabs", "activeTab", "scripting"],
   "host_permissions": ["*://teams.microsoft.com/*"],
   "action": {
+    "default_popup": "popup.html",
     "default_title": "Wiggle Teams!",
     "default_icon": {
       "128": "activeUser.png"
     }
   }
 }
+
 
 

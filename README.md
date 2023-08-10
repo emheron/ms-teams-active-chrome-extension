@@ -1,10 +1,10 @@
 # Wiggle Teams
 
-Wiggle Teams is a simple Chrome extension to help keep your Microsoft Teams status active when Teams is open in a browser tab. 
+Wiggle Teams is a simple Chrome extension designed to keep your Microsoft Teams status active when Teams is open in a browser tab. 
 
-The extension works by simulating a user action at random intervals. 
+The extension works by simulating user actions such as mouse movements and clicks at defined intervals to prevent your status from going idle.
 
-Please note that this extension is intended for educational purposes. Always follow your organization's policy regarding use of such extensions. 
+**Important:** This extension is intended for individual use, and users should follow their organization's policy regarding the use of such extensions.
 
 ## Installation Instructions
 
@@ -13,14 +13,13 @@ Please note that this extension is intended for educational purposes. Always fol
 3. Enable `Developer mode` by clicking the toggle switch at the top right.
 4. Click on `Load unpacked`.
 5. Navigate to the location where you cloned or downloaded the repository and select the repository folder.
-6. Click `Open` and the extension should now be installed on your browser.
+6. Click `Open`, and the extension should now be installed on your browser.
 
 ## Usage Instructions
 
-1. Once installed, you'll see the extension's icon (a check mark) on your Chrome extensions bar.
-2. There's no need for additional action from your side as the extension will work automatically when Microsoft Teams is opened in a browser tab.
-3. The extension will keep your Microsoft Teams status active by simulating a user action at random intervals.
-4. Remember to leave Microsoft Teams open in a tab for the extension to work.
+1. Once installed, you'll see the extension's icon on your Chrome extensions bar.
+2. The extension works automatically when Microsoft Teams is opened in a browser tab, simulating user actions at intervals of approximately 5 minutes.
+3. Remember to leave Microsoft Teams open in a tab for the extension to work. It works best when Teams is only open in the browser and not simultaneously with the desktop app.
 
 ## Uninstall
 

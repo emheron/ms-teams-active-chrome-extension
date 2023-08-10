@@ -1,5 +1,5 @@
 var intervalId = null;
-const KEEP_ACTIVE_INTERVAL = 5 * 60 * 1000; 
+const KEEP_ACTIVE_INTERVAL = 1 * 60 * 1000; 
 
 function keepTeamsActive() {
   chrome.tabs.query({ url: '*://teams.microsoft.com/*', active: true }, function(tabs) {

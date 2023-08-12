@@ -1,5 +1,5 @@
 var intervalId = null;
-const KEEP_ACTIVE_INTERVAL = 30 * 1000; // 30 seconds
+const KEEP_ACTIVE_INTERVAL = 10 * 1000; // 10 seconds
 
 function keepTeamsActive() {
   console.log('Checking for Microsoft Teams tabs...');
@@ -7,9 +7,12 @@ function keepTeamsActive() {
   chrome.tabs.query({}, function(tabs) {
     const teamsTabs = tabs.filter(tab => tab.url && tab.url.includes('teams.microsoft.com'));
 
+    console.log(`Total tabs queried: ${tabs.length}`);
+    console.log(`Microsoft Teams tabs found: ${teamsTabs.length}`);
+
     if (teamsTabs.length) {
-      console.log(`Found ${teamsTabs.length} Microsoft Teams tabs. Simulating user activity...`);
       teamsTabs.forEach(tab => {
+        console.log(`Processing tab with URL: ${tab.url}`);
         chrome.scripting.executeScript({
           target: { tabId: tab.id },
           func: simulateUserActivity,

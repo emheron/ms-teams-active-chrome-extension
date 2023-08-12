@@ -2,7 +2,7 @@
 
 Wiggle Teams is a simple Chrome extension designed to keep your Microsoft Teams status active when Teams is open in a browser tab. 
 
-The extension works by simulating user actions such as mouse movements and clicks at defined intervals to prevent your status from going idle.
+The extension works by simulating user actions such as mouse movements, clicks, scrolling, and keyboard events at defined intervals to prevent your status from going idle.
 
 **Important:** This extension is intended for individual use, and users should follow their organization's policy regarding the use of such extensions.
 
@@ -18,7 +18,7 @@ The extension works by simulating user actions such as mouse movements and click
 ## Usage Instructions
 
 1. Once installed, you'll see the extension's icon on your Chrome extensions bar.
-2. The extension works automatically when Microsoft Teams is opened in a browser tab, simulating user actions at intervals of approximately 5 minutes.
+2. The extension works automatically when Microsoft Teams is opened in a browser tab, simulating user actions at intervals of approximately 10 seconds.
 3. Remember to leave Microsoft Teams open in a tab for the extension to work. It works best when Teams is only open in the browser and not simultaneously with the desktop app.
 
 ## Uninstall

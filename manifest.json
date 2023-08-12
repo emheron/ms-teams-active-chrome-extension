@@ -10,7 +10,8 @@
   "host_permissions": [
     "*://*.teams.microsoft.com/*",
     "https://teams.microsoft.com/*",
-    "http://teams.microsoft.com/*"
+    "http://teams.microsoft.com/*",
+    "https://teams.microsoft.com.mcas.ms/*"
   ],
   "action": {
     "default_popup": "popup.html",

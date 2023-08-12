@@ -5,7 +5,7 @@ function keepTeamsActive() {
   console.log('Checking for Microsoft Teams tabs...');
 
   chrome.tabs.query({}, function(tabs) {
-    const teamsTabs = tabs.filter(tab => /https?:\/\/.*teams\.microsoft\.com.*/.test(tab.url));
+    const teamsTabs = tabs.filter(tab => /https?:\/\/.*teams\.microsoft\.com[^\/]*\/.*/.test(tab.url));
     if (teamsTabs.length) {
       console.log(`Found ${teamsTabs.length} Microsoft Teams tabs. Simulating user activity...`);
       teamsTabs.forEach(tab => {

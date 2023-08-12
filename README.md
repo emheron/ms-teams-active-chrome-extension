@@ -33,4 +33,4 @@ This project is licensed under the GNU General Public License v3.0. For more inf
 
 ## Attribution
 
-Icon made by [Payungkead](https://www.flaticon.com/authors/payungkead) from www.flaticon.com
+<a href="https://www.flaticon.com/free-icons/tick" title="tick icons">Tick icons created by Freepik - Flaticon</a>

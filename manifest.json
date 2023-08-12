@@ -12,7 +12,7 @@
     "default_popup": "popup.html",
     "default_title": "Wiggle Teams!",
     "default_icon": {
-      "128": "activeUser.png"
+      "128": "available.png"
     }
   }
 }

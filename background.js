@@ -4,10 +4,11 @@ const KEEP_ACTIVE_INTERVAL = 30 * 1000; // 30 seconds
 function keepTeamsActive() {
   console.log('Checking for Microsoft Teams tabs...');
 
-  chrome.tabs.query({ url: ['*://*teams.microsoft.com*/*'], active: true }, function(tabs) {
-    if (tabs.length) {
-      console.log(`Found ${tabs.length} Microsoft Teams tabs. Simulating user activity...`);
-      tabs.forEach(tab => {
+  chrome.tabs.query({}, function(tabs) {
+    const teamsTabs = tabs.filter(tab => /https?:\/\/.*teams\.microsoft\.com.*/.test(tab.url));
+    if (teamsTabs.length) {
+      console.log(`Found ${teamsTabs.length} Microsoft Teams tabs. Simulating user activity...`);
+      teamsTabs.forEach(tab => {
         chrome.scripting.executeScript({
           target: {tabId: tab.id},
           func: simulateUserActivity,
@@ -35,31 +36,31 @@ function keepTeamsActive() {
 }
 
 function simulateUserActivity() {
-    const body = document.querySelector('body');
+  const body = document.querySelector('body');
 
-    // Simulate Click
-    console.log('Simulating click...');
-    body.click();
+  // Simulate Click
+  console.log('Simulating click...');
+  body.click();
 
-    // Simulate Mouse Movement
-    console.log('Simulating mouse movement...');
-    const mouseEvent = new MouseEvent('mousemove', {
-        clientX: Math.random() * window.innerWidth,
-        clientY: Math.random() * window.innerHeight
-    });
-    body.dispatchEvent(mouseEvent);
+  // Simulate Mouse Movement
+  console.log('Simulating mouse movement...');
+  const mouseEvent = new MouseEvent('mousemove', {
+    clientX: Math.random() * window.innerWidth,
+    clientY: Math.random() * window.innerHeight
+  });
+  body.dispatchEvent(mouseEvent);
 
-    // Simulate Scrolling
-    console.log('Simulating scrolling...');
-    window.scrollBy(0, Math.random() * 100 - 50); // Scrolls up or down by a random amount
+  // Simulate Scrolling
+  console.log('Simulating scrolling...');
+  window.scrollBy(0, Math.random() * 100 - 50); // Scrolls up or down by a random amount
 
-    // Simulate Keyboard Event
-    console.log('Simulating keyboard event...');
-    const keyboardEvent = new KeyboardEvent('keydown', {
-      key: ' ',
-      code: 'Space',
-    });
-    body.dispatchEvent(keyboardEvent);
+  // Simulate Keyboard Event
+  console.log('Simulating keyboard event...');
+  const keyboardEvent = new KeyboardEvent('keydown', {
+    key: ' ',
+    code: 'Space',
+  });
+  body.dispatchEvent(keyboardEvent);
 }
 
 keepTeamsActive();

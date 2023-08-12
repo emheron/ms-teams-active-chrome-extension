@@ -6,7 +6,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["scripting"],
+  "permissions": ["scripting", "tabs", "activeTab"],
   "host_permissions": ["*://teams.microsoft.com/*"],
   "action": {
     "default_popup": "popup.html",

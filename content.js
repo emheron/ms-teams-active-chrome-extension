@@ -1,3 +1,9 @@
+if (window.hasRun) {
+    throw new Error('content.js has already been executed on this page.');
+  }
+  
+  window.hasRun = true;
+  
 console.log("Content script loaded and running!");
 
 function simulateActivity() {

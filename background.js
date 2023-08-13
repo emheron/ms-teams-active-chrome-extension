@@ -35,6 +35,4 @@ function keepTeamsActive() {
   });
 }
 
-// Clear content scripts from previous runs before starting again.
-chrome.contentScripts.unregister();
 keepTeamsActive();

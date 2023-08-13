@@ -18,7 +18,7 @@
       "run_at": "document_idle"
     }
   ],
-  "permissions": ["scripting", "tabs", "activeTab"],
+  "permissions": ["scripting", "tabs"],
   "host_permissions": [
     "*://*.teams.microsoft.com/*",
     "https://teams.microsoft.com/*",

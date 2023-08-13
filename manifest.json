@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Wiggle Teams",
-  "version": "1.2",
-  "description": "Wiggle Teams ensures your Microsoft Teams status stays active in the browser by simulating random user activity at 10 second intervals.",
+  "version": "1.3",
+  "description": "Ensures your Microsoft Teams status stays active in the browser by simulating random user activity at 10 second intervals.",
   "background": {
     "service_worker": "background.js"
   },

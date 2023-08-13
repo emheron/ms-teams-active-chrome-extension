@@ -6,6 +6,18 @@
   "background": {
     "service_worker": "background.js"
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.teams.microsoft.com/*",
+        "https://teams.microsoft.com/*",
+        "http://teams.microsoft.com/*",
+        "https://teams.microsoft.com.mcas.ms/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
   "permissions": ["scripting", "tabs", "activeTab"],
   "host_permissions": [
     "*://*.teams.microsoft.com/*",

@@ -2,25 +2,23 @@ var intervalId = null;
 const KEEP_ACTIVE_INTERVAL = 10 * 1000; // 10 seconds
 
 function keepTeamsActive() {
-  console.log('Checking for Microsoft Teams tabs...');
+  console.log('Starting check for Microsoft Teams tabs...');
 
   chrome.tabs.query({}, function(tabs) {
     const teamsTabs = tabs.filter(tab => tab.url && tab.url.includes('teams.microsoft.com'));
 
-    console.log(`Total tabs queried: ${tabs.length}`);
-    console.log(`Microsoft Teams tabs found: ${teamsTabs.length}`);
-
     if (teamsTabs.length) {
+      console.log(`Found ${teamsTabs.length} Microsoft Teams tabs. Starting simulation of user activity...`);
       teamsTabs.forEach(tab => {
-        console.log(`Processing tab with URL: ${tab.url}`);
+        console.log(`Simulating user activity for tab: ${tab.url}`);
         chrome.scripting.executeScript({
           target: { tabId: tab.id },
           func: simulateUserActivity,
           args: []
         }).then(() => {
-          console.log('User activity simulation successful.');
+          console.log(`User activity simulation successful for tab: ${tab.url}`);
         }).catch(error => {
-          console.error('Error executing script:', error);
+          console.error(`Error executing script for tab: ${tab.url}`, error);
         });
       });
 
@@ -41,10 +39,16 @@ function keepTeamsActive() {
 
 function simulateUserActivity() {
   const body = document.querySelector('body');
+  if (!body) {
+    console.error('Body element not found.');
+    return;
+  }
 
+  // Additional logging for each simulation
   // Simulate Click
   console.log('Simulating click...');
   body.click();
+  console.log('Click simulation complete.');
 
   // Simulate Mouse Movement
   console.log('Simulating mouse movement...');
@@ -53,10 +57,12 @@ function simulateUserActivity() {
     clientY: Math.random() * window.innerHeight
   });
   body.dispatchEvent(mouseEvent);
+  console.log('Mouse movement simulation complete.');
 
   // Simulate Scrolling
   console.log('Simulating scrolling...');
   window.scrollBy(0, Math.random() * 100 - 50); // Scrolls up or down by a random amount
+  console.log('Scrolling simulation complete.');
 
   // Simulate Keyboard Event
   console.log('Simulating keyboard event...');
@@ -65,6 +71,7 @@ function simulateUserActivity() {
     code: 'Space',
   });
   body.dispatchEvent(keyboardEvent);
+  console.log('Keyboard event simulation complete.');
 }
 
 keepTeamsActive();

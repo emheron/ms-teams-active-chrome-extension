@@ -5,13 +5,20 @@ var executedTabs = {};
 
 function keepTeamsActive() {
 
-  chrome.tabs.query({}, function(tabs) {
+  console.log('keepTeamsActive() called.');
+
+  chrome.tabs.query({}, function (tabs) {
     const teamsTabs = tabs.filter(tab => tab.url && tab.url.includes('teams.microsoft.com'));
+
+    console.log('Number of Teams tabs detected:', teamsTabs.length);
 
     if (teamsTabs.length) {
       teamsTabs.forEach(tab => {
-        if (!executedTabs[tab.id]) { 
+        if (!executedTabs[tab.id]) {
           executedTabs[tab.id] = true;
+
+          console.log('Executing on tab:', tab.id);
+
           chrome.scripting.executeScript({
             target: { tabId: tab.id },
             files: ['content.js']
@@ -19,6 +26,8 @@ function keepTeamsActive() {
             chrome.tabs.sendMessage(tab.id, { action: 'simulateActivity' });
           }).catch(error => {
             console.error('Error executing script:', error);
+      
+            executedTabs[tab.id] = false;
           });
         }
       });
@@ -28,12 +37,13 @@ function keepTeamsActive() {
       }
     } else {
       if (intervalId) {
+
         console.log('Clearing interval.');
         clearInterval(intervalId);
         intervalId = null;
-        executedTabs = {}; 
+        executedTabs = {};
+      }
     }
-  }
   });
 }
 

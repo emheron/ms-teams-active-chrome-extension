@@ -5,19 +5,19 @@ var executedTabs = {};
 
 function keepTeamsActive() {
 
-  console.log('keepTeamsActive() called.');
+  //console.log('keepTeamsActive() called.');
 
   chrome.tabs.query({}, function (tabs) {
     const teamsTabs = tabs.filter(tab => tab.url && tab.url.includes('teams.microsoft.com'));
 
-    console.log('Number of Teams tabs detected:', teamsTabs.length);
+   // console.log('Number of Teams tabs detected:', teamsTabs.length);
 
     if (teamsTabs.length) {
       teamsTabs.forEach(tab => {
         if (!executedTabs[tab.id]) {
           executedTabs[tab.id] = true;
 
-          console.log('Executing on tab:', tab.id);
+         // console.log('Executing on tab:', tab.id);
 
           chrome.scripting.executeScript({
             target: { tabId: tab.id },

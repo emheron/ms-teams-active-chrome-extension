@@ -5,7 +5,7 @@ if (window.hasRun) {
 window.hasRun = true;
 
 function simulateActivity() {
-  console.log('simulateActivity() called.');
+  //console.log('simulateActivity() called.');
 
   const body = document.querySelector('body');
 

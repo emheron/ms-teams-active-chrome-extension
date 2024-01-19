@@ -1,0 +1,41 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    width: 500px;
+    margin: 0;
+    padding: 15px;
+    color: #333;
+    background-color: #f2f2f2; 
+  }
+  
+  h1 {
+    color: #008000; 
+    font-weight: normal;
+  }
+  
+  #statusIndicator {
+    margin: 10px 0;
+  }
+  
+  #toggleExtension {
+    background-color: #32CD32; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  #toggleExtension:hover {
+    background-color: #228B22; 
+  }
+  
+  #toggleExtension.active {
+    background-color: #FF6347; 
+  }
+  
+  #toggleExtension.active:hover {
+    background-color: #FF4500; 
+  }
+  
+  

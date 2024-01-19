@@ -1,36 +1,42 @@
 # Wiggle Teams
 
-Wiggle Teams is a simple Chrome extension designed to keep your Microsoft Teams status active when Teams is open in a browser tab. 
+**Version**: 1.5
 
-The extension works by simulating user actions such as mouse movements, clicks, scrolling, and keyboard events at defined intervals to prevent your status from going idle.
+Wiggle Teams is a Chrome extension designed to keep your Microsoft Teams status active when it's open in a browser tab. The extension prevents your Teams status from going idle by simulating user activities.
 
-**Important:** This extension is intended for individual use, and users should follow their organization's policy regarding the use of such extensions.
+## Important Disclaimer
+This extension is intended for individual use, and users should follow their organization's policies regarding the use of such tools. It interacts with Microsoft Teams in the browser to simulate activity and does not collect or share personal information.
+
+## Features
+- Simulates mouse movements, clicks, scrolling, and keyboard events.
+- Uses Chrome's Manifest V3 for enhanced performance and security.
+- Includes a status indicator and toggle button in the popup.
+- Improved error handling and randomized activity patterns for natural simulation.
 
 ## Installation Instructions
 
-1. Clone this repository to your local machine or download the zip file.
-2. Open Google Chrome and navigate to `chrome://extensions`.
-3. Enable `Developer mode` by clicking the toggle switch at the top right.
-4. Click on `Load unpacked`.
-5. Navigate to the location where you cloned or downloaded the repository and select the repository folder.
-6. Click `Open`, and the extension should now be installed on your browser.
+1. Clone this repository or download the zip file.
+2. Open Chrome, navigate to `chrome://extensions`.
+3. Enable `Developer mode`.
+4. Click `Load unpacked` and select the downloaded folder.
+5. The extension will now be installed.
 
 ## Usage Instructions
 
-1. Once installed, you'll see the extension's icon on your Chrome extensions bar.
-2. The extension works automatically when Microsoft Teams is opened in a browser tab, simulating user actions at intervals of approximately 10 seconds.
-3. Remember to leave Microsoft Teams open in a tab for the extension to work. It works best when Teams is only open in the browser and not simultaneously with the desktop app.
+1. The extension icon appears on the Chrome extensions bar upon installation.
+2. It activates automatically in Microsoft Teams browser tabs, simulating actions every 10 seconds.
+3. Best used with Teams open in a single browser tab.
 
 ## Uninstall
 
-1. Navigate to `chrome://extensions`.
-2. You'll see all your installed extensions. Find the one for "Wiggle Teams" and click on `Remove`.
-3. Confirm by clicking `Remove` in the confirmation dialog.
+1. Go to `chrome://extensions`.
+2. Locate "Wiggle Teams" and select `Remove`.
+3. Confirm the removal in the dialog.
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0. For more information, see the [LICENSE](LICENSE) file in this repository.
+Licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for details.
 
 ## Attribution
 
-<a href="https://www.flaticon.com/free-icons/tick" title="tick icons">Tick icons created by Freepik - Flaticon</a>
+Tick icons by Freepik - [Flaticon](https://www.flaticon.com/free-icons/tick)

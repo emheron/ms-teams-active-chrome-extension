@@ -5,8 +5,6 @@ if (window.hasRun) {
 window.hasRun = true;
 
 function simulateActivity() {
-  //console.log('simulateActivity() called.');
-
   const body = document.querySelector('body');
 
   if (!body) {
@@ -22,7 +20,7 @@ function simulateActivity() {
   });
   body.dispatchEvent(mouseEvent);
 
-  window.scrollBy(0, Math.random() * 100 - 50); 
+  window.scrollBy(0, Math.random() * 100 - 50);
 
   const keyboardEvent = new KeyboardEvent('keydown', {
     key: ' ',
@@ -37,3 +35,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse({ success: true });
   }
 });
+
+

@@ -1,11 +1,11 @@
 var intervalId = null;
 const KEEP_ACTIVE_INTERVAL = 10 * 1000;
-
 var executedTabs = {};
-var isActive = false;  // Variable to keep track of the extension's active status
+var isActive = true;  
 
 function keepTeamsActive() {
-  isActive = true;
+  if (!isActive) return; 
+
   chrome.tabs.query({}, function (tabs) {
     const teamsTabs = tabs.filter(tab => tab.url && tab.url.includes('teams.microsoft.com'));
 
@@ -34,31 +34,32 @@ function keepTeamsActive() {
         clearInterval(intervalId);
         intervalId = null;
         executedTabs = {};
-        isActive = false;
       }
     }
   });
 }
 
-keepTeamsActive();
+function toggleActiveState() {
+  isActive = !isActive;
+  if (!isActive && intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+    executedTabs = {};
+  } else if (isActive) {
+    keepTeamsActive();
+  }
+}
 
-// Listen for messages from the popup script
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === 'getStatus') {
     sendResponse({ isActive: isActive });
   } else if (request.action === 'toggleActiveState') {
-    if (isActive) {
-      clearInterval(intervalId);
-      intervalId = null;
-      executedTabs = {};
-      isActive = false;
-    } else {
-      keepTeamsActive();
-    }
+    toggleActiveState();
     sendResponse({ isActive: isActive });
   }
-  return true;  // Indicates you wish to send a response asynchronously
+  return true;  
 });
+
 
 
 

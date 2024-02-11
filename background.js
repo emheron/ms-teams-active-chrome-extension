@@ -1,6 +1,5 @@
 var intervalId = null;
 const KEEP_ACTIVE_INTERVAL = 10000; // 10 seconds in milliseconds
-var isActive; // Dynamically set based on storage or default to true.
 
 // Initialize or retrieve the active state from storage
 function initializeActiveState() {
@@ -11,7 +10,9 @@ function initializeActiveState() {
     });
 }
 
-chrome.runtime.onInstalled.addListener(initializeActiveState);
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.storage.local.set({isActive: true}, initializeActiveState); // Ensure isActive is true on install
+});
 chrome.runtime.onStartup.addListener(initializeActiveState);
 
 // Inject content script into open Microsoft Teams tabs
@@ -35,9 +36,12 @@ function injectContentScript(tabId) {
 }
 
 function keepTeamsActive() {
-    if (!isActive) return;
-    chrome.tabs.query({url: ["*://*.teams.microsoft.com/*", "*://*.teams.live.com/*"]}, (tabs) => {
-        tabs.forEach(tab => injectContentScript(tab.id));
+    chrome.storage.local.get('isActive', function(data) {
+        if (data.isActive) {
+            chrome.tabs.query({url: ["*://*.teams.microsoft.com/*", "*://*.teams.live.com/*"]}, (tabs) => {
+                tabs.forEach(tab => injectContentScript(tab.id));
+            });
+        }
     });
 }
 
@@ -50,18 +54,28 @@ function manageActivitySimulationInterval(shouldStart) {
     }
 }
 
-function toggleActiveState() {
-    isActive = !isActive;
-    chrome.storage.local.set({isActive: isActive}, () => {
-        manageActivitySimulationInterval(isActive);
-        if (isActive) findAndInjectScripts(); // Re-inject scripts if toggled back on
+function toggleActiveState(callback) {
+    chrome.storage.local.get('isActive', function(data) {
+        const newIsActive = !data.isActive;
+        chrome.storage.local.set({isActive: newIsActive}, () => {
+            manageActivitySimulationInterval(newIsActive);
+            if (newIsActive) findAndInjectScripts(); // Re-inject scripts if toggled back on
+            if (callback) callback(newIsActive);
+        });
     });
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'toggleActiveState') {
-        toggleActiveState();
-        sendResponse({isActive: isActive});
+        toggleActiveState((newIsActive) => {
+            sendResponse({isActive: newIsActive});
+        });
+        return true; // indicates you wish to send a response asynchronously
+    } else if (request.action === 'getStatus') {
+        chrome.storage.local.get('isActive', function(data) {
+            sendResponse({isActive: data.isActive});
+        });
+        return true; // indicates you wish to send a response asynchronously
     }
 });
 

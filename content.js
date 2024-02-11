@@ -1,39 +1,54 @@
-if (window.hasRun) {
-  throw new Error('content.js has already been executed on this page.');
-}
+console.log("Content script loaded and executing.");
 
-window.hasRun = true;
+// Removed the check for window.hasRun to allow repeated execution
 
+// Function to simulate user activity
 function simulateActivity() {
-  const body = document.querySelector('body');
+    console.log("Simulating user activity.");
+    const body = document.querySelector('body');
 
-  if (!body) {
-    console.error('Body element not found.');
-    return;
-  }
+    if (!body) {
+        console.error('Body element not found. Unable to simulate activity.');
+        return;
+    }
 
-  body.click();
+    // Simulate mouse click
+    body.click();
+    console.log("Simulated mouse click.");
 
-  const mouseEvent = new MouseEvent('mousemove', {
-    clientX: Math.random() * window.innerWidth,
-    clientY: Math.random() * window.innerHeight
-  });
-  body.dispatchEvent(mouseEvent);
+    // Simulate mouse movement
+    const mouseEvent = new MouseEvent('mousemove', {
+        clientX: Math.random() * window.innerWidth,
+        clientY: Math.random() * window.innerHeight,
+    });
+    body.dispatchEvent(mouseEvent);
+    console.log("Simulated mouse movement.");
 
-  window.scrollBy(0, Math.random() * 100 - 50);
+    // Simulate scroll
+    window.scrollBy(0, Math.random() * 100 - 50);
+    console.log("Simulated scroll.");
 
-  const keyboardEvent = new KeyboardEvent('keydown', {
-    key: ' ',
-    code: 'Space',
-  });
-  body.dispatchEvent(keyboardEvent);
+    // Simulate key press
+    const keyboardEvent = new KeyboardEvent('keydown', { key: ' ', code: 'Space' });
+    body.dispatchEvent(keyboardEvent);
+    console.log("Simulated key press.");
 }
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === 'simulateActivity') {
+// Ensuring DOM is fully loaded before attempting to simulate activity
+if (document.readyState === "complete" || document.readyState === "interactive") {
     simulateActivity();
-    sendResponse({ success: true });
-  }
+} else {
+    document.addEventListener('DOMContentLoaded', simulateActivity);
+}
+
+// Listener for messages from the background script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log(`Received message to simulate activity: action = ${message.action}`);
+    if (message.action === 'simulateActivity') {
+        simulateActivity();
+        sendResponse({ success: true });
+        console.log("Activity simulation complete.");
+    } else {
+        console.error("Unknown action requested:", message.action);
+    }
 });
-
-

@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Wiggle Teams",
-  "version": "1.5",
-  "description": "Ensures your Microsoft Teams status stays active in the browser by simulating random user activity at 10 second intervals.",
+  "version": "1.6",
+  "description": "Ensures your Microsoft Teams status stays active by simulating random user activity.",
+  "permissions": ["scripting", "tabs", "activeTab", "storage", "webNavigation"],
   "background": {
     "service_worker": "background.js"
   },
@@ -12,18 +13,20 @@
         "*://*.teams.microsoft.com/*",
         "https://teams.microsoft.com/*",
         "http://teams.microsoft.com/*",
-        "https://teams.microsoft.com.mcas.ms/*"
+        "https://teams.microsoft.com.mcas.ms/*",
+        "https://teams.live.com/*"
       ],
       "js": ["content.js"],
-      "run_at": "document_idle"
+      "run_at": "document_start",
+      "all_frames": true
     }
   ],
-  "permissions": ["scripting", "tabs", "activeTab"],
   "host_permissions": [
     "*://*.teams.microsoft.com/*",
     "https://teams.microsoft.com/*",
     "http://teams.microsoft.com/*",
-    "https://teams.microsoft.com.mcas.ms/*"
+    "https://teams.microsoft.com.mcas.ms/*",
+    "https://teams.live.com/*"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -31,5 +34,17 @@
     "default_icon": {
       "128": "available.png"
     }
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["content.js"],
+      "matches": [
+        "*://*.teams.microsoft.com/*",
+        "https://teams.microsoft.com/*",
+        "http://teams.microsoft.com/*",
+        "https://teams.microsoft.com.mcas.ms/*",
+        "https://teams.live.com/*"
+      ]
+    }
+  ]
 }

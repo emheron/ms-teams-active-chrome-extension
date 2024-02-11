@@ -1,54 +1,50 @@
 console.log("Content script loaded and executing.");
 
-// Removed the check for window.hasRun to allow repeated execution
+// Function to generate a random delay within a given range
+function randomDelay(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
-// Function to simulate user activity
+// Main function to simulate user activity
 function simulateActivity() {
-    console.log("Simulating user activity.");
-    const body = document.querySelector('body');
+    const body = document.body || document.documentElement;
 
     if (!body) {
         console.error('Body element not found. Unable to simulate activity.');
         return;
     }
 
-    // Simulate mouse click
-    body.click();
-    console.log("Simulated mouse click.");
+    // Execute activity simulation after a random delay to mimic natural interaction
+    setTimeout(() => {
+        console.log("Simulating user activity.");
+        body.click();
+        console.log("Simulated mouse click.");
 
-    // Simulate mouse movement
-    const mouseEvent = new MouseEvent('mousemove', {
-        clientX: Math.random() * window.innerWidth,
-        clientY: Math.random() * window.innerHeight,
-    });
-    body.dispatchEvent(mouseEvent);
-    console.log("Simulated mouse movement.");
+        const mouseEvent = new MouseEvent('mousemove', {
+            clientX: randomDelay(0, window.innerWidth),
+            clientY: randomDelay(0, window.innerHeight),
+        });
+        body.dispatchEvent(mouseEvent);
+        console.log("Simulated mouse movement.");
 
-    // Simulate scroll
-    window.scrollBy(0, Math.random() * 100 - 50);
-    console.log("Simulated scroll.");
+        window.scrollBy(0, randomDelay(-100, 100));
+        console.log("Simulated scroll.");
 
-    // Simulate key press
-    const keyboardEvent = new KeyboardEvent('keydown', { key: ' ', code: 'Space' });
-    body.dispatchEvent(keyboardEvent);
-    console.log("Simulated key press.");
+        const keys = [' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+        const randomKey = keys[randomDelay(0, keys.length - 1)];
+        const keyboardEvent = new KeyboardEvent('keydown', { key: randomKey });
+        body.dispatchEvent(keyboardEvent);
+        console.log(`Simulated key press: ${randomKey}.`);
+    }, randomDelay(500, 3000)); // Random delay to make the activity less predictable
 }
 
-// Ensuring DOM is fully loaded before attempting to simulate activity
-if (document.readyState === "complete" || document.readyState === "interactive") {
-    simulateActivity();
-} else {
-    document.addEventListener('DOMContentLoaded', simulateActivity);
-}
+// Periodically simulate activity
+setInterval(simulateActivity, 10000); // Adjusted to use a direct value for clarity
 
-// Listener for messages from the background script
+// Listen for messages from the background script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log(`Received message to simulate activity: action = ${message.action}`);
     if (message.action === 'simulateActivity') {
-        simulateActivity();
+        simulateActivity(); // Trigger activity simulation upon request
         sendResponse({ success: true });
-        console.log("Activity simulation complete.");
-    } else {
-        console.error("Unknown action requested:", message.action);
     }
 });

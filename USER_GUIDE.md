@@ -15,7 +15,15 @@ Wiggle Teams is a Chrome extension designed to maintain an active status on Micr
 
 1. Once installed, no further action is required from you.
 2. The extension automatically keeps your Microsoft Teams status active by simulating random user actions at intervals of approximately 10 seconds, as long as Microsoft Teams is open in a browser tab.
-3. A status indicator and toggle button are available in the popup for additional control.
+3. To manually control the simulation, click the Wiggle Teams icon in your Chrome extensions bar to open the popup window. Here, a status indicator and toggle button allow you to activate or deactivate the extension as needed.
+
+## Troubleshooting
+
+If you encounter any issues with Wiggle Teams:
+
+1. **Check the Popup Window**: Open the Wiggle Teams popup by clicking the extension icon. Ensure the status indicator shows the extension as "Active." If not, click the "Activate Extension" button to enable it.
+2. **Browser Console Logs**: For more detailed insights or to diagnose problems, open the browser's developer console (right-click the page and select "Inspect", then go to the "Console" tab). Look for logs related to simulated activity by Wiggle Teams. These logs can provide clues to the extension's operation and any issues.
+3. **Refresh Teams Tab**: Sometimes, refreshing the Microsoft Teams tab in your browser can reinitialize the extension's activity simulation if it has stopped unexpectedly.
 
 ## Features
 

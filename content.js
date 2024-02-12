@@ -1,105 +1,90 @@
-// Ensure 'isSimulating' is globally scoped to avoid redeclaration errors
+// Global state initialization or retention
 if (typeof window.isSimulating === 'undefined') {
-  window.isSimulating = true; // Initialize or retain the existing state
-  console.log('Simulation state initialized:', window.isSimulating);
+  window.isSimulating = true; // Initialize the state
+  console.log('Simulation state initialized to active.');
 } else {
-  console.log('Simulation state already set:', window.isSimulating);
+  // Log retained for debugging if the script is re-injected or re-executed without reloading
+  console.log('Retained simulation state:', window.isSimulating ? 'active' : 'inactive');
 }
 
-// Function to generate a random delay within a given range
+// Random delay generator
 function randomDelay(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// Simulate mouse movement
+// Mouse movement simulation
 function simulateMouseMovement(element) {
-  try {
-    const clientX = randomDelay(0, window.innerWidth);
-    const clientY = randomDelay(0, window.innerHeight);
-    const moveEvent = new MouseEvent('mousemove', {
-      bubbles: true,
-      cancelable: true,
-      clientX: clientX,
-      clientY: clientY,
-    });
-    element.dispatchEvent(moveEvent);
-  } catch (error) {
-    console.error('Error simulating mouse movement:', error);
-  }
+  const clientX = randomDelay(0, window.innerWidth);
+  const clientY = randomDelay(0, window.innerHeight);
+  const moveEvent = new MouseEvent('mousemove', {
+    bubbles: true,
+    cancelable: true,
+    clientX: clientX,
+    clientY: clientY,
+  });
+  element.dispatchEvent(moveEvent);
 }
 
-// Simulate mouse click
+// Mouse click simulation
 function simulateMouseClick(element) {
-  try {
-    ['mousedown', 'mouseup', 'click'].forEach(type => {
-      const mouseEvent = new MouseEvent(type, {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-      });
-      element.dispatchEvent(mouseEvent);
-    });
-  } catch (error) {
-    console.error('Error simulating mouse click:', error);
-  }
-}
-
-// Simulate keyboard interaction
-function simulateKeyPress(element) {
-  try {
-    const keys = [' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'];
-    const randomKey = keys[randomDelay(0, keys.length - 1)];
-    const keyEvent = new KeyboardEvent('keydown', {
+  ['mousedown', 'mouseup', 'click'].forEach(type => {
+    const mouseEvent = new MouseEvent(type, {
       bubbles: true,
       cancelable: true,
-      key: randomKey,
-      code: randomKey,
+      view: window,
     });
-    element.dispatchEvent(keyEvent);
-    console.log(`Simulated key press: ${randomKey}`);
-  } catch (error) {
-    console.error('Error simulating key press:', error);
-  }
+    element.dispatchEvent(mouseEvent);
+  });
 }
 
-// Main function to simulate user activity
+// Keyboard interaction simulation
+function simulateKeyPress(element) {
+  const keys = [' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'];
+  const randomKey = keys[randomDelay(0, keys.length - 1)];
+  const keyEvent = new KeyboardEvent('keydown', {
+    bubbles: true,
+    cancelable: true,
+    key: randomKey,
+    code: randomKey,
+  });
+  element.dispatchEvent(keyEvent);
+  // Log only the key press for visibility into active simulation without clutter
+  console.log(`Simulated key press: ${randomKey}`);
+}
+
+// User activity simulation
 function simulateActivity() {
   if (!window.isSimulating) {
-    console.log('Simulation stopped.');
-    return; // Exit if simulation is turned off
+    console.log('Simulation stopped.'); // Important state change log
+    return;
   }
 
   const targetElement = document.body || document.documentElement;
   if (!targetElement) {
-    console.error('Target element not found. Unable to simulate activity.');
+    console.error('Unable to find target element for simulation.'); // Critical error log
     return;
   }
 
-  // Execute activity simulation after a random delay
   setTimeout(() => {
-    if (!window.isSimulating) {
-      console.log('Exiting simulation due to toggle off.');
-      return; // Exit if simulation is turned off
-    }
+    if (!window.isSimulating) return; // Check state again before continuing
     simulateMouseClick(targetElement);
     simulateMouseMovement(targetElement);
     window.scrollBy(0, randomDelay(-100, 100));
     simulateKeyPress(targetElement);
-    console.log('Activity simulation cycle completed.');
-    simulateActivity(); // Continue simulation
+    simulateActivity(); // Recursive call to continue the simulation loop
   }, randomDelay(500, 3000));
 }
 
-// Listen for messages from the background script to toggle simulation
+// Message listener for simulation control
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'toggleActivity') {
     window.isSimulating = message.isActive;
-    console.log(`Activity simulation toggled: ${window.isSimulating}`);
+    console.log('Toggled simulation state:', window.isSimulating ? 'active' : 'inactive');
     if (window.isSimulating) {
-      simulateActivity(); // Restart or continue simulation
+      simulateActivity(); // Optionally restart simulation on state change
     }
-    sendResponse({ success: true, message: "Activity simulation state changed." });
+    sendResponse({ success: true, message: "Simulation state updated." });
   } else {
-    console.error('Received unknown action:', message.action);
+    console.warn('Unknown message action received:', message.action);
   }
 });
